@@ -1,0 +1,37 @@
+name: Build VideoCompressor EXE
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "video_compressor.py"
+      - ".github/workflows/build-compressor.yml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install pyinstaller imageio-ffmpeg
+
+      - name: Build EXE (ffmpeg 내장)
+        run: >
+          pyinstaller --onefile --windowed
+          --name VideoCompressor
+          --collect-all imageio_ffmpeg
+          video_compressor.py
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: VideoCompressor-windows
+          path: dist/VideoCompressor.exe
