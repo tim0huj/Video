@@ -30,21 +30,21 @@ jobs:
           pip install -r requirements-build.txt
 
       - name: Build EXE with PyInstaller
-        shell: cmd
+        shell: bash
         run: |
-          pyinstaller --noconfirm --clean ^
-            --name VideoOCRExtractor ^
-            --onedir ^
-            --add-data "app.py;." ^
-            --add-data ".streamlit;.streamlit" ^
-            --collect-all streamlit ^
-            --collect-all streamlit_drawable_canvas ^
-            --collect-all cv2 ^
-            --collect-all pandas ^
-            --collect-metadata streamlit ^
-            --hidden-import pytesseract ^
-            --hidden-import openpyxl ^
-            --hidden-import fpdf ^
+          pyinstaller --noconfirm --clean \
+            --name VideoOCRExtractor \
+            --onedir \
+            --add-data "app.py;." \
+            --add-data ".streamlit;.streamlit" \
+            --collect-all streamlit \
+            --collect-all streamlit_drawable_canvas \
+            --collect-all cv2 \
+            --collect-all pandas \
+            --collect-metadata streamlit \
+            --hidden-import pytesseract \
+            --hidden-import openpyxl \
+            --hidden-import fpdf \
             launcher.py
 
       - name: Bundle Tesseract next to the EXE
